@@ -1,288 +1,125 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>DevX Mobile Auto Detailing</title>
+import { useState } from "react";
+import { motion } from "framer-motion";
+import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+export default function DevXWebsite() {
+  const [basePrice, setBasePrice] = useState(0);
+  const [addon, setAddon] = useState(0);
 
-<style>
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-}
+  const total = basePrice + addon;
+  const discount = total * 0.2;
+  const finalPrice = total - discount;
 
-body{
-  font-family:'Inter',sans-serif;
-  background:#0b0b0b;
-  color:#fff;
-  overflow-x:hidden;
-}
+  return (
+    <div className="bg-black text-white min-h-screen font-sans">
+      {/* HERO */}
+      <section className="h-screen flex flex-col justify-center items-center text-center relative overflow-hidden">
+        <video
+          autoPlay
+          muted
+          loop
+          className="absolute w-full h-full object-cover opacity-40"
+        >
+          <source src="https://cdn.coverr.co/videos/coverr-car-detailing-9716/1080p.mp4" />
+        </video>
 
-/* HERO SLIDES */
-.hero{
-  height:100vh;
-  position:relative;
-  overflow:hidden;
-}
+        <motion.h1
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="text-5xl md:text-7xl font-bold text-red-500 z-10"
+        >
+          DEVX AUTO DETAILING
+        </motion.h1>
+        <p className="text-gray-300 mt-4 z-10">
+          Black • Red • Silver Premium Car Care Experience
+        </p>
+        <p className="text-sm text-gray-400 z-10">
+          Email: devx@gmail.com
+        </p>
+      </section>
 
-.slide{
-  position:absolute;
-  inset:0;
-  opacity:0;
-  transition:opacity 1s ease;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  text-align:center;
-}
+      {/* SERVICES */}
+      <section className="p-10 grid md:grid-cols-3 gap-6">
+        {[
+          {
+            title: "Full Interior Detail",
+            desc: "Deep vacuum, steam clean, leather care, air compression finish.",
+          },
+          {
+            title: "Exterior Wash & Shine",
+            desc: "Foam wash, clay bar, polish, high gloss finish.",
+          },
+          {
+            title: "Engine Bay Clean",
+            desc: "Safe degrease, pressure air blow, detailed finish.",
+          },
+        ].map((s, i) => (
+          <Card key={i} className="bg-zinc-900 border-red-600">
+            <CardContent className="p-6">
+              <h2 className="text-xl text-red-400 font-bold">{s.title}</h2>
+              <p className="text-gray-300 mt-2">{s.desc}</p>
+            </CardContent>
+          </Card>
+        ))}
+      </section>
 
-.slide.active{
-  opacity:1;
-}
+      {/* PRICING */}
+      <section className="p-10 bg-zinc-950">
+        <h2 className="text-3xl font-bold text-red-500 mb-6">
+          Pricing Generator (20% OFF 1st Time Detail)
+        </h2>
 
-/* CAR DRIVING EFFECT */
-.slide.car{
-  background:url('https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=2000&q=80') center/cover no-repeat;
-  animation:drive 12s ease-in-out infinite;
-}
+        <div className="grid md:grid-cols-2 gap-6">
+          <div>
+            <label>Base Detail Price</label>
+            <input
+              type="number"
+              className="w-full p-2 text-black"
+              onChange={(e) => setBasePrice(Number(e.target.value))}
+            />
 
-@keyframes drive{
-  0%{transform:scale(1.05) translateX(0)}
-  50%{transform:scale(1.12) translateX(-25px)}
-  100%{transform:scale(1.05) translateX(0)}
-}
+            <label className="mt-4 block">Add-ons (Vacuum/Air/Extras)</label>
+            <input
+              type="number"
+              className="w-full p-2 text-black"
+              onChange={(e) => setAddon(Number(e.target.value))}
+            />
+          </div>
 
-/* WIPE EFFECT */
-.slide.wipe{
-  background:url('https://images.unsplash.com/photo-1603386329225-868f9b1ee6c9?auto=format&fit=crop&w=2000&q=80') center/cover no-repeat;
-}
+          <div className="bg-black p-6 border border-red-600">
+            <p>Total: ${total}</p>
+            <p className="text-red-400">Discount (20%): -${discount.toFixed(2)}</p>
+            <h3 className="text-2xl mt-2 text-white">
+              Final Price: ${finalPrice.toFixed(2)}
+            </h3>
+          </div>
+        </div>
+      </section>
 
-.slide.wipe::after{
-  content:"";
-  position:absolute;
-  inset:0;
-  background:url('https://images.unsplash.com/photo-1613214149922-1d5c2c3d2a5d?auto=format&fit=crop&w=2000&q=80') center/cover no-repeat;
-  opacity:0.35;
-  animation:wipe 6s infinite;
-  mix-blend-mode:screen;
-}
+      {/* COMING SOON */}
+      <section className="p-10 text-center">
+        <h2 className="text-3xl text-red-500">Coming Soon</h2>
+        <p className="text-gray-400 mt-2">
+          Ceramic Coating • Professional Polishing
+        </p>
 
-@keyframes wipe{
-  0%{clip-path:inset(0 100% 0 0)}
-  50%{clip-path:inset(0 0 0 0)}
-  100%{clip-path:inset(0 100% 0 0)}
-}
+        <div className="mt-6 flex justify-center gap-4">
+          <img
+            src="https://images.unsplash.com/photo-1603386329225-868f9b1ee6c9"
+            className="w-72 rounded-xl opacity-70"
+          />
+          <img
+            src="https://images.unsplash.com/photo-1600661653561-629509216228"
+            className="w-72 rounded-xl opacity-70"
+          />
+        </div>
+      </section>
 
-.overlay{
-  position:absolute;
-  inset:0;
-  background:rgba(0,0,0,0.65);
-  backdrop-filter:blur(6px);
-}
-
-.content{
-  position:relative;
-  z-index:2;
-}
-
-.title{
-  font-family:'Oswald',sans-serif;
-  font-size:4rem;
-  color:#ff0000;
-  text-shadow:0 0 20px rgba(255,0,0,0.4);
-}
-
-.subtitle{
-  margin-top:10px;
-  font-size:1.1rem;
-  color:#ccc;
-}
-
-.btn{
-  margin-top:20px;
-  padding:12px 26px;
-  border:1px solid #ff0000;
-  background:transparent;
-  color:#fff;
-  cursor:pointer;
-  transition:0.3s;
-}
-
-.btn:hover{
-  background:#ff0000;
-  transform:scale(1.05);
-}
-
-.dots{
-  position:absolute;
-  bottom:20px;
-  width:100%;
-  display:flex;
-  justify-content:center;
-  gap:10px;
-}
-
-.dot{
-  width:10px;
-  height:10px;
-  border-radius:50%;
-  background:#555;
-  cursor:pointer;
-}
-
-.dot.active{
-  background:#ff0000;
-}
-
-/* SECTIONS */
-section{
-  padding:80px 10%;
-}
-
-h2{
-  font-family:'Oswald',sans-serif;
-  font-size:2.2rem;
-  color:#ff0000;
-  margin-bottom:20px;
-}
-
-.services,.pricing{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-  gap:20px;
-}
-
-.card{
-  background:rgba(255,255,255,0.05);
-  padding:20px;
-  border:1px solid rgba(255,0,0,0.2);
-  border-radius:12px;
-  transition:0.4s;
-  cursor:pointer;
-}
-
-.card:hover{
-  transform:translateY(-10px) rotateY(10deg);
-  box-shadow:0 15px 40px rgba(255,0,0,0.25);
-}
-
-.price{
-  font-size:1.5rem;
-  font-weight:700;
-  margin:10px 0;
-}
-
-.tag{
-  display:inline-block;
-  padding:4px 10px;
-  background:#ff0000;
-  border-radius:20px;
-  font-size:0.75rem;
-  margin-bottom:10px;
-}
-
-.contact{
-  text-align:center;
-  background:rgba(255,0,0,0.05);
-}
-
-.contact p{
-  color:#ccc;
-  margin:6px 0;
-}
-
-footer{
-  text-align:center;
-  padding:20px;
-  color:#666;
-}
-</style>
-</head>
-
-<body>
-
-<div class="hero">
-
-  <div class="slide car active">
-    <div class="overlay"></div>
-    <div class="content">
-      <div class="title">DevX Mobile Auto Detailing</div>
-      <div class="subtitle">We bring the shine to you</div>
-      <button class="btn" onclick="nextSlide()">Next</button>
+      {/* FOOTER */}
+      <footer className="p-6 text-center text-gray-500 border-t border-red-800">
+        © 2026 DevX Auto Detailing
+      </footer>
     </div>
-  </div>
-
-  <div class="slide wipe">
-    <div class="overlay"></div>
-    <div class="content">
-      <div class="title">Deep Interior & Exterior Cleaning</div>
-      <div class="subtitle">Microfiber precision. Clean that hits different.</div>
-      <button class="btn" onclick="nextSlide()">Services</button>
-    </div>
-  </div>
-
-  <div class="dots">
-    <div class="dot active" onclick="goSlide(0)"></div>
-    <div class="dot" onclick="goSlide(1)"></div>
-  </div>
-
-</div>
-
-<section>
-  <h2>Services</h2>
-  <div class="services">
-    <div class="card"><h3>Exterior Wash</h3><p>Foam wash, rinse, dry, tire shine.</p></div>
-    <div class="card"><h3>Interior Clean</h3><p>Vacuum, wipe down, stain removal.</p></div>
-    <div class="card"><h3>Full Detail</h3><p>Full inside + outside reset.</p></div>
-  </div>
-</section>
-
-<section>
-  <h2>Pricing</h2>
-  <div class="pricing">
-    <div class="card"><div class="tag">Basic</div><h3>Exterior</h3><div class="price">$40-$60</div></div>
-    <div class="card"><div class="tag">Popular</div><h3>Interior</h3><div class="price">$60-$90</div></div>
-    <div class="card"><div class="tag">Best</div><h3>Full Detail</h3><div class="price">$120-$180</div></div>
-  </div>
-</section>
-
-<section class="contact">
-  <h2>Contact</h2>
-  <p>856-883-2195</p>
-  <p>garnesgevin1738@gmail.com</p>
-</section>
-
-<footer>© 2026 DevX Mobile Auto Detailing</footer>
-
-<script>
-let index = 0;
-const slides = document.querySelectorAll('.slide');
-const dots = document.querySelectorAll('.dot');
-
-function show(i){
-  slides.forEach(s=>s.classList.remove('active'));
-  dots.forEach(d=>d.classList.remove('active'));
-  slides[i].classList.add('active');
-  dots[i].classList.add('active');
+  );
 }
-
-function nextSlide(){
-  index = (index + 1) % slides.length;
-  show(index);
-}
-
-function goSlide(i){
-  index = i;
-  show(i);
-}
-
-setInterval(nextSlide, 8000);
-</script>
-
-</body>
-</html>
