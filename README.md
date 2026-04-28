@@ -1,1 +1,0 @@
-# DEVX-Mobile-Auto-Detail
